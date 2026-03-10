@@ -7,6 +7,7 @@ async function getUser() {
   if (!user) window.location.href = 'login.html'
   return user
 }
+
 // Elementos do DOM
 const lista = document.getElementById('lista')
 const input = document.getElementById('item')
@@ -67,4 +68,5 @@ document.addEventListener('keydown', function (event) {
       adicionarItem()
  }
 })
+    
     
