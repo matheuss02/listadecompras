@@ -1,5 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
+    --cor-primaria-1: #291528;
+    --cor-primaria-2: #212a5f;
+    --cor-primaria-3: #4c99e0;
+    --cor-primaria-4: #9d49d4;
+    --cor-bg: #e4a0db;
+
+    --cor-branco: #fff;
+    --cor-preto: #1d1d1d;
+    --cor-sombra: #rgba(0, 0, 0, 0.15);
+    --cor-texto: #333;
+
+    --fonte: "Poppins", sans-serif;
+     
+    --raio: 12px; 
+    --transition: 0.3s ease;
+    
+
+}
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+
+}
+
+body {
+    font-family: var(--fonte);
+    background: #030003;
+    background: linear-gradient(90deg,rgba(3, 0, 3, 1) 0%, rgba(21, 29, 82, 1) 50%, rgba(0, 214, 200, 1) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
 
 }
