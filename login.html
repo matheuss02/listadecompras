@@ -6,12 +6,16 @@
     <title>Document</title>
     <link rel="stylesheet" href="src/css/Login.css">
 </head>
-<body>
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="E-mail">
-    <input type="password" id="senha" placeholder="Senha">
-    <button onclick="login()">Entrar</button>
-    <button onclick="cadastro()">Cadastrar</button>
+<body> 
+    <div class="container">
+        <h2>Login</h2>
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="senha" placeholder="Senha">
+        <div class="botoes">
+            <button onclick="login()">Entrar</button>
+            <button onclick="cadastro()">Cadastrar</button>
+        </div>
+    </div>
 
     <script type="module" src="auth.js"></script>
 </body>
