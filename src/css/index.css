@@ -35,7 +35,7 @@ button {
     border-radius: var(--raio);
     background-color: var(--cor-primaria-2);
     color: var(--cor-branco);
-    corsor: pointer;
+    cursor: pointer;
     transition: var(--transition);
 }
 
