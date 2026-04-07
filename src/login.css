@@ -98,7 +98,7 @@ button.hover {
     background-color: var(--cor-primaria-1);
 }
 
-@midia (max-widith: 360px) {
+@media (max-widith: 360px) {
     .container {
         padding: 1.5rem;
     }
