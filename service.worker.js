@@ -1,6 +1,6 @@
 const CACHE_NAME = 'lista-compras-v1';
 const urlsToCache = [
-   '/',
+  '/',
   '/login.html',
   '/src/css/login.css',
   '/index.html',
