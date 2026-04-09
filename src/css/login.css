@@ -39,13 +39,14 @@ body {
 
 .container {
     background: var(--cor-branco);
-    padding: clamp(2rem, 5vh, 3rem);
+    padding: clamp(2rem, 5vw, 3rem);
     border-radius: var(--raio);
     box-shadow: 0 8px 24px var(--cor-sombra);
     width: 100%;
     max-width: 400px;
     text-align: center;
 }
+
 #logo {
     width: 150px;
     height: auto;
@@ -54,7 +55,7 @@ body {
 }
 
 .titulo {
-    font-size: clamp(1.5rem, 2vw, + 1rem, 2rem);
+    font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
     color: var(--cor-texto);
     margin-bottom: 1.5rem;
     font-weight: 500;
@@ -65,6 +66,7 @@ input {
     padding: 14px;
     margin: 10px 0;
     border: 1px solid var(--cor-preto);
+    border-radius: var(--raio);
     font-size: 1rem;
     transition: var(--transition);
 }
@@ -73,13 +75,13 @@ input.focus {
     border-color: var(--cor-primaria-1);
     outline: none;
     box-shadow: 0 0 0 3px rgba(181, 1, 181, 0.25);
-    }
+}
 
-    .botoes {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        margin-top: 20px;
+.botoes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
 }
 
 button {
@@ -98,11 +100,12 @@ button.hover {
     background-color: var(--cor-primaria-1);
 }
 
-@media (max-widith: 360px) {
+@media (max-width:360px) {
     .container {
         padding: 1.5rem;
     }
-    input, button{
+
+    input, button {
         font-size: 0.95rem;
     }
 }
