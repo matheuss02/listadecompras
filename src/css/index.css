@@ -138,3 +138,7 @@ button[onclick="adicionarItem()"] {
     font-weight: 500;
     transition: var(--transition);
 }
+
+button[onclick="adicionarItem()"]:hover {
+    background-color: var(--cor-primaria-2);
+}
