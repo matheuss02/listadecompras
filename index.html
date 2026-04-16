@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon">
     <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="src/css/index.css">
-    <title>Lista 2026</title>
+    <title>Lista 2026 · Minha Lista</title>
 </head>
 <body>
     <div class="container">
-        <h2 class="titulo">Minha lista de compras</h2>
-        <button onclick="logout()">Sair</button>
-        <ul id="lista"></ul>
-        <input type="text" id="item" placeholder="Novo Item">
-        <button onclick="adicionarItem()">Adicionar</button>
+        <header class="app-header">
+            <h1 class="titulo">🛒 Minha Lista</h1>
+            <button class="btn-sair" id="logout-btn" title="Sair da conta">Sair</button>
+        </header>
+
+        <div class="lista-header">
+            <span id="contador-itens" class="contador">0 itens</span>
+        </div>
+
+        <ul id="lista" class="lista-compras">
+            <!-- Itens serão inseridos via JavaScript -->
+        </ul>
+
+        <div id="empty-state" class="empty-state">
+            <p>✨ Sua lista está vazia</p>
+            <p class="empty-hint">Adicione um item abaixo para começar</p>
+        </div>
+
+        <div class="add-item-form">
+            <input type="text" id="item" placeholder="Ex: Pão, Leite, Café..." autocomplete="off" aria-label="Novo item">
+            <button class="btn-adicionar" id="adicionar-btn">Adicionar</button>
+        </div>
     </div>
 
     <script type="module" src="app.js"></script>
@@ -24,15 +41,32 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
                     .then(registration => {
-                        console.log('ServiceWorker registrado com sucesso:', registration.scope);
+                        console.log('ServiceWorker registrado:', registration.scope);
                     })
                     .catch(error => {
-                        console.log('Falha ao registrar o ServiceWorker:', error);
+                        console.log('Falha no ServiceWorker:', error);
                     });
             });
         }
+
+        // Controle básico da UI (será complementado pelo app.js)
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            logoutBtn.addEventListener('click', () => {
+                if (confirm('Tem certeza que deseja sair?')) {
+                    if (typeof logout === 'function') {
+                        logout();
+                    } else {
+                        alert('Logout simulado');
+                        window.location.href = '/login.html';
+                    }
+                }
+            });
+
+            // Foco automático no campo de item
+            document.getElementById('item').focus();
+        });
     </script>
-    
 </body>
 </html>
-
