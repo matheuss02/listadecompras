@@ -3,22 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista 2026 3º SIS</title>
+    <title>Lista 2026 3º SIS - Login</title>
     <link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="src/css/login.css">
 </head>
 <body>
     <div class="container">
-        <img src="src/icons/icon-512x512.png" alt="logo" id="logo">
-        <h2 class="titulo">Login</h2>
-        <input type="email" id="email" placeholder="E-mail">
-        <input type="password" id="senha" placeholder="Senha">
-        
-        <div class="botoes">
-            <button onclick="login()">Entrar</button>
-            <button onclick="cadastro()">Cadastrar</button>
-        </div>
+        <img src="src/icons/icon-512x512.png" alt="Logo da Lista 2026" id="logo">
+        <h2 class="titulo">Acesse sua conta</h2>
+
+        <form id="login-form" novalidate>
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="********" autocomplete="current-password" required>
+            </div>
+
+            <div id="error-message" class="error-message"></div>
+
+            <div class="botoes">
+                <button type="submit" class="btn-primary">Entrar</button>
+                <button type="button" class="btn-secondary" id="cadastro-btn">Cadastrar</button>
+            </div>
+        </form>
     </div>
 
     <script type="module" src="auth.js"></script>
@@ -35,6 +47,70 @@
                     });
             });
         }
+
+        // Validação simples de login
+        const form = document.getElementById('login-form');
+        const emailInput = document.getElementById('email');
+        const senhaInput = document.getElementById('senha');
+        const errorDiv = document.getElementById('error-message');
+        const cadastroBtn = document.getElementById('cadastro-btn');
+
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        function hideError() {
+            errorDiv.textContent = '';
+            errorDiv.style.display = 'none';
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = emailInput.value.trim();
+            const senha = senhaInput.value;
+
+            if (!email) {
+                showError('Por favor, informe seu e-mail.');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showError('Por favor, informe um e-mail válido.');
+                return;
+            }
+
+            if (!senha) {
+                showError('Por favor, informe sua senha.');
+                return;
+            }
+
+            if (senha.length < 6) {
+                showError('A senha deve ter pelo menos 6 caracteres.');
+                return;
+            }
+
+            hideError();
+            // Aqui você pode chamar a função login() do auth.js
+            if (typeof login === 'function') {
+                login(email, senha);
+            } else {
+                alert('Login simulado com sucesso!');
+            }
+        });
+
+        cadastroBtn.addEventListener('click', () => {
+            alert('Redirecionando para cadastro...');
+            // window.location.href = '/cadastro.html';
+        });
+
+        // Limpa erro ao digitar
+        emailInput.addEventListener('input', hideError);
+        senhaInput.addEventListener('input', hideError);
     </script>
 </body>
 </html>

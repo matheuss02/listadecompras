@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    --cor-primaria-1: #361134;
+    --cor-primaria-2: #B0228C;
+    --cor-primaria-3: #EA3788;
+    --cor-primaria-4: #E56B70;
+    --cor-bg: #F391A0;
+
+    --cor-branco: #fff;
+    --cor-preto: #1d1d1d;
+    --cor-sombra: rgba(0, 0, 0, 0.1);
+    --cor-texto: #333;
+    --cor-texto-light: #666;
+
+    --fonte: "Poppins", sans-serif;
+
+    --raio: 14px;
+    --raio-sm: 8px;
+    --transition: 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--fonte);
+    background: linear-gradient(135deg, #EA3788 0%, #E56B70 50%, #F391A0 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background: var(--cor-branco);
+    padding: 2rem;
+    border-radius: 24px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Header */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.titulo {
+    font-size: 1.8rem;
+    color: var(--cor-primaria-1);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+.btn-sair {
+    background: none;
+    border: 1.5px solid var(--cor-primaria-2);
+    color: var(--cor-primaria-2);
+    padding: 8px 16px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-sair:hover {
+    background: var(--cor-primaria-2);
+    color: var(--cor-branco);
+    border-color: var(--cor-primaria-2);
+}
+
+/* Contador */
+.lista-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.contador {
+    color: var(--cor-texto-light);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Lista de compras */
+.lista-compras {
+    list-style: none;
+    margin-bottom: 1.5rem;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.lista-compras:empty {
+    display: none;
+}
+
+/* Item da lista */
+.item-lista {
+    background: #f9f9f9;
+    border-radius: var(--raio-sm);
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    animation: slideIn 0.2s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.item-lista:hover {
+    background: #fff;
+    border-color: var(--cor-primaria-4);
+    box-shadow: 0 4px 8px var(--cor-sombra);
+}
+
+/* Checkbox personalizado */
+.item-checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--cor-primaria-2);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.item-checkbox:checked {
+    background: var(--cor-primaria-2);
+    border-color: var(--cor-primaria-2);
+}
+
+.item-checkbox:checked::after {
+    content: "✓";
+    color: white;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Texto do item */
+.item-texto {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--cor-texto);
+    word-break: break-word;
+}
+
+.item-checkbox:checked + .item-texto {
+    text-decoration: line-through;
+    color: var(--cor-texto-light);
+}
+
+/* Botão remover */
+.btn-remover {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.btn-remover:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+/* Estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--cor-texto-light);
+    display: none;
+}
+
+.lista-compras:empty ~ .empty-state {
+    display: block;
+}
+
+.empty-state p:first-child {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-hint {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Form de adicionar item */
+.add-item-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 0.5rem;
+}
+
+#item {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: var(--raio);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: #fafafa;
+}
+
+#item:focus {
+    outline: none;
+    border-color: var(--cor-primaria-2);
+    background: var(--cor-branco);
+    box-shadow: 0 0 0 4px rgba(176, 34, 140, 0.1);
+}
+
+#item::placeholder {
+    color: #aaa;
+    font-weight: 300;
+}
+
+.btn-adicionar {
+    padding: 14px 24px;
+    background: var(--cor-primaria-2);
+    color: var(--cor-branco);
+    border: none;
+    border-radius: var(--raio);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    box-shadow: 0 4px 8px rgba(176, 34, 140, 0.2);
+}
+
+.btn-adicionar:hover {
+    background: var(--cor-primaria-1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(54, 17, 52, 0.25);
+}
+
+.btn-adicionar:active {
+    transform: translateY(0);
+}
+
+/* Scrollbar personalizada */
+.lista-compras::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lista-compras::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.lista-compras::-webkit-scrollbar-thumb {
+    background: var(--cor-primaria-4);
+    border-radius: 10px;
+}
+
+/* Responsivo */
+@media (max-width: 500px) {
+    .container {
+        padding: 1.5rem;
+    }
+
+    .titulo {
+        font-size: 1.5rem;
+    }
+
+    .add-item-form {
+        flex-direction: column;
+    }
+
+    .btn-adicionar {
+        width: 100%;
+    }
+
+    .btn-sair {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+}
