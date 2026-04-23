@@ -11,52 +11,64 @@
 <body>
     <div class="container">
         <img src="src/icons/icon-512x512.png" alt="Logo da Lista 2026" id="logo">
-        <h2 class="titulo">Acesse sua conta</h2>
+        <h2 class="titulo">Bem-vindo de volta!</h2>
+        <p class="subtitulo">Faça login para acessar sua lista compartilhada</p>
 
         <form id="login-form" novalidate>
             <div class="input-group">
-                <label for="email">E-mail</label>
+                <label for="email">📧 E-mail</label>
                 <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
             </div>
 
             <div class="input-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" placeholder="********" autocomplete="current-password" required>
+                <label for="senha">🔒 Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="••••••••" autocomplete="current-password" required>
             </div>
 
             <div id="error-message" class="error-message"></div>
+            <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                ⏳ Entrando...
+            </div>
 
             <div class="botoes">
-                <button type="submit" class="btn-primary">Entrar</button>
-                <button type="button" class="btn-secondary" id="cadastro-btn">Cadastrar</button>
+                <button type="submit" class="btn-primary" id="entrar-btn">Entrar</button>
+                <button type="button" class="btn-secondary" id="cadastro-btn">✨ Criar conta</button>
             </div>
         </form>
+
+        <div class="footer-text">
+            <p>🔐 Seus dados estão seguros</p>
+        </div>
     </div>
 
-    <script type="module" src="auth.js"></script>
+    <script type="module">
+        import { login, cadastro } from './auth.js';
 
-    <script>
+        // Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/service-worker.js')
                     .then(registration => {
-                        console.log('ServiceWorker registrado com sucesso:', registration.scope);
+                        console.log('✅ ServiceWorker registrado:', registration.scope);
                     })
                     .catch(error => {
-                        console.log('Falha ao registrar o ServiceWorker:', error);
+                        console.log('⚠️ Falha no ServiceWorker:', error);
                     });
             });
         }
 
-        // Validação simples de login
+        // Elementos DOM
         const form = document.getElementById('login-form');
         const emailInput = document.getElementById('email');
         const senhaInput = document.getElementById('senha');
         const errorDiv = document.getElementById('error-message');
+        const loadingDiv = document.getElementById('loading-indicator');
+        const entrarBtn = document.getElementById('entrar-btn');
         const cadastroBtn = document.getElementById('cadastro-btn');
 
+        // Funções de UI
         function showError(message) {
-            errorDiv.textContent = message;
+            errorDiv.textContent = '❌ ' + message;
             errorDiv.style.display = 'block';
         }
 
@@ -65,52 +77,90 @@
             errorDiv.style.display = 'none';
         }
 
+        function showLoading() {
+            loadingDiv.style.display = 'block';
+            entrarBtn.disabled = true;
+            entrarBtn.textContent = 'Entrando...';
+        }
+
+        function hideLoading() {
+            loadingDiv.style.display = 'none';
+            entrarBtn.disabled = false;
+            entrarBtn.textContent = 'Entrar';
+        }
+
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
         }
 
-        form.addEventListener('submit', (e) => {
+        // Evento de submit
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
             const email = emailInput.value.trim();
             const senha = senhaInput.value;
 
+            hideError();
+
+            // Validações
             if (!email) {
                 showError('Por favor, informe seu e-mail.');
+                emailInput.focus();
                 return;
             }
 
             if (!isValidEmail(email)) {
                 showError('Por favor, informe um e-mail válido.');
+                emailInput.focus();
                 return;
             }
 
             if (!senha) {
                 showError('Por favor, informe sua senha.');
+                senhaInput.focus();
                 return;
             }
 
             if (senha.length < 6) {
                 showError('A senha deve ter pelo menos 6 caracteres.');
+                senhaInput.focus();
                 return;
             }
 
-            hideError();
-            // Aqui você pode chamar a função login() do auth.js
-            if (typeof login === 'function') {
-                login(email, senha);
-            } else {
-                alert('Login simulado com sucesso!');
+            showLoading();
+
+            try {
+                console.log('🔐 Tentando login com:', email);
+                await login(email, senha);
+                console.log('✅ Login bem sucedido!');
+                window.location.href = '/index.html';
+            } catch (error) {
+                console.error('❌ Erro no login:', error);
+                
+                let mensagem = 'Erro ao fazer login. ';
+                if (error.message.includes('Invalid login credentials')) {
+                    mensagem += 'E-mail ou senha incorretos.';
+                } else if (error.message.includes('Email not confirmed')) {
+                    mensagem += 'E-mail não confirmado. Verifique sua caixa de entrada.';
+                } else {
+                    mensagem += error.message;
+                }
+                
+                showError(mensagem);
+                hideLoading();
             }
         });
 
+        // Botão Cadastrar
         cadastroBtn.addEventListener('click', () => {
-            alert('Redirecionando para cadastro...');
-            // window.location.href = '/cadastro.html';
+            cadastro();
         });
 
-        // Limpa erro ao digitar
+        // Limpar erros ao digitar
         emailInput.addEventListener('input', hideError);
         senhaInput.addEventListener('input', hideError);
+
+        console.log('🟢 Página de login carregada!');
     </script>
 </body>
 </html>
